@@ -21,7 +21,10 @@ import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import org.jetpack.compose.screens.DetailsScreen
 import org.jetpack.compose.ui.theme.MyAppTheme
+
+import org.jetpack.compose.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,15 +52,11 @@ fun MainScreen() {
 @Composable
 fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "home", modifier = modifier) {
-        composable("home") { HomeScreen() }
+        composable("home") { HomeScreen(navController) }
         composable("search") { SearchScreen() }
         composable("settings") { SettingsScreen() }
+        composable("details") { DetailsScreen(navController) }
     }
-}
-
-@Composable
-fun HomeScreen() {
-    Text("This is the Home Screen")
 }
 
 @Composable
