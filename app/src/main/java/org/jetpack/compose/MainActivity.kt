@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,14 +16,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import org.jetpack.compose.screens.DetailsScreen
+import org.jetpack.compose.ui.theme.screens.DetailsScreen
 import org.jetpack.compose.ui.theme.MyAppTheme
 
-import org.jetpack.compose.screens.HomeScreen
+import org.jetpack.compose.ui.theme.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
