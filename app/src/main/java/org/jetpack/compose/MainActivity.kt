@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -21,6 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import org.jetpack.compose.ui.theme.screens.DetailsScreen
 import org.jetpack.compose.ui.theme.MyAppTheme
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 
 import org.jetpack.compose.ui.theme.screens.HomeScreen
 
@@ -51,7 +59,7 @@ fun MainScreen() {
 fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "home", modifier = modifier) {
         composable("home") { HomeScreen(navController) }
-        composable("search") { SearchScreen() }
+        composable("search") { DetailsScreen(navController) }
         composable("settings") { SettingsScreen() }
         composable("details") { DetailsScreen(navController) }
     }
@@ -87,13 +95,39 @@ fun AppToolbar(navController: NavHostController) {
 fun AppBottomNavigation(navController: NavHostController) {
     val items = listOf("home", "search", "settings")
     val currentDestination = navController.currentBackStackEntryAsState().value?.destination?.route
-    NavigationBar {
+    val density = LocalDensity.current
+    val insets = WindowInsets.navigationBars
+    val bottomPaddingDp = with(density) { insets.getBottom(density).toDp() }
+    NavigationBar (
+        modifier = Modifier
+            .height(64.dp + bottomPaddingDp)
+            .padding(top = 0.dp, bottom = 0.dp)
+    ){
         items.forEach { item ->
             NavigationBarItem(
+                modifier = Modifier.padding(top = 6.dp, bottom = 0.dp).align(Alignment.Bottom),
                 selected = currentDestination == item,
-                onClick = { navController.navigate(item) },
-                label = { Text(item.capitalize()) },
-                icon = { Icon(Icons.Default.Home, contentDescription = item) }
+                onClick = { if (currentDestination != item) {
+                    navController.navigate(item) {
+                        // Hindari navigasi berulang
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                } },
+                label = {
+                    Text(
+                        text = item.capitalize(),
+                        fontWeight = if (currentDestination == item) FontWeight.Bold else FontWeight.Normal,
+                        color = if (currentDestination == item) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                    )
+                },
+                icon = { Icon(Icons.Default.Home,
+                    contentDescription = item,
+                    modifier = Modifier.size(24.dp).padding(bottom = 0.dp).align(Alignment.Bottom)
+                )}
             )
         }
     }
