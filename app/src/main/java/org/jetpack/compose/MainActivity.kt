@@ -126,7 +126,6 @@ fun AppBottomNavigation(navController: NavHostController) {
                 selected = currentDestination == item,
                 onClick = { if (currentDestination != item) {
                     navController.navigate(item) {
-                        // Hindari navigasi berulang
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
