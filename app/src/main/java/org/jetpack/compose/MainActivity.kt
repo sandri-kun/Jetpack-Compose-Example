@@ -1,6 +1,10 @@
 package org.jetpack.compose
 
 import android.os.Bundle
+import android.os.Build
+import android.animation.ObjectAnimator
+import android.animation.AnimatorListenerAdapter
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,14 +31,27 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
-
 import org.jetpack.compose.ui.theme.screens.HomeScreen
+
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                val animator = ObjectAnimator.ofFloat(splashScreenView.view, View.ALPHA, 1f, 0f)
+                animator.duration = 0L
+                animator.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: android.animation.Animator) {
+                        splashScreenView.remove()
+                    }
+                })
+                animator.start()
+            }
+        }
         enableEdgeToEdge()
         setContent {
             MyAppTheme {

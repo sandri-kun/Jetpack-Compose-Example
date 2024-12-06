@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "org.jetpack.compose"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.jetpack.compose"
@@ -58,6 +58,8 @@ dependencies {
 
     val nav_version = "2.8.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("androidx.core:core-splashscreen:1.2.0-alpha02")
 
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
