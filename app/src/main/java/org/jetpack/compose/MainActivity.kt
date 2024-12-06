@@ -79,6 +79,7 @@ fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifi
         composable("search") { DetailsScreen(navController) }
         composable("settings") { SettingsScreen() }
         composable("details") { DetailsScreen(navController) }
+        composable("new") { NewScreen() }
     }
 }
 
@@ -145,6 +146,24 @@ fun AppBottomNavigation(navController: NavHostController) {
                     modifier = Modifier.size(24.dp).padding(bottom = 0.dp).align(Alignment.Bottom)
                 )}
             )
+        }
+    }
+}
+
+@Composable
+fun NewScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("This is a new screen without NavigationView", style = MaterialTheme.typography.titleMedium)
+        Button(onClick = {
+
+        }) {
+            Text("Go Back")
         }
     }
 }

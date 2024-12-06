@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+##---------------Begin: proguard configuration for Application  ----------
+-ignorewarnings
+-repackageclasses 'x'
+-optimizationpasses 5
+-allowaccessmodification
+##---------------End: proguard configuration for Application  ----------
+
+##---------------Begin: proguard configuration for OKIO  ----------
+-dontwarn okio.**
+##---------------End: proguard configuration for OKIO  ----------

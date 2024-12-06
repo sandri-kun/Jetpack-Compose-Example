@@ -21,7 +21,9 @@ fun HomeScreen(navController: NavController) {
         ) {
             Text(text = "Home Screen")
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { navController.navigate("details") }) {
+            Button(onClick = { navController.navigate("new") {
+                popUpTo(0) {inclusive = true}
+            } }) {
                 Text(text = "Go to Details")
             }
         }
