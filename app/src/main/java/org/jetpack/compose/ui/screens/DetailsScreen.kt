@@ -1,4 +1,4 @@
-package org.jetpack.compose.ui.theme.screens
+package org.jetpack.compose.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun DetailsScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -19,12 +19,10 @@ fun HomeScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Home Screen")
+            Text(text = "Details Screen")
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { navController.navigate("new") {
-                popUpTo(0) {inclusive = true}
-            } }) {
-                Text(text = "Go to Details")
+            Button(onClick = { navController.popBackStack() }) {
+                Text(text = "Back to Home")
             }
         }
     }

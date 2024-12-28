@@ -19,7 +19,8 @@ import java.io.StringWriter
 import java.io.Writer
 import java.lang.Exception
 import java.time.LocalDate
-import kotlin.concurrent.Volatile
+//import kotlin.concurrent.Volatile
+import kotlin.jvm.Volatile
 
 class ApplicationLoader : Application() {
     private var uncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null

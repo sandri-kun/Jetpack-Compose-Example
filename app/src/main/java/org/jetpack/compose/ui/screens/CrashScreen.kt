@@ -1,4 +1,4 @@
-package org.jetpack.compose.ui.theme.screens
+package org.jetpack.compose.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
