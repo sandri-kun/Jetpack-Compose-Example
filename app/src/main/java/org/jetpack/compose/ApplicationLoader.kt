@@ -1,7 +1,6 @@
 package org.jetpack.compose
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -19,8 +18,8 @@ import java.io.StringWriter
 import java.io.Writer
 import java.lang.Exception
 import java.time.LocalDate
-//import kotlin.concurrent.Volatile
 import kotlin.jvm.Volatile
+import kotlin.system.exitProcess
 
 class ApplicationLoader : Application() {
     private var uncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
@@ -32,28 +31,28 @@ class ApplicationLoader : Application() {
     override fun onCreate() {
         applicationLoaderInstance = this
         try {
-            Companion.applicationContext = getApplicationContext()
+            Companion.applicationContext = this.applicationContext
         } catch (ignore: Throwable) {
         }
         uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(
             object : Thread.UncaughtExceptionHandler {
                 override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
-                    val intent = Intent(getApplicationContext(), DebugActivity::class.java)
+                    val intent = Intent(applicationContext, DebugActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     intent.putExtra("error", Log.getStackTraceString(throwable))
                     startActivity(intent)
                     Process.killProcess(Process.myPid())
-                    System.exit(1)
+                    exitProcess(1)
                 }
             })
         super.onCreate()
 
         if (Companion.applicationContext == null) {
-            Companion.applicationContext = getApplicationContext()
+            Companion.applicationContext = this.applicationContext
         }
 
-        applicationHandler = Handler(Companion.applicationContext!!.getMainLooper())
+        applicationHandler = Handler(Companion.applicationContext!!.mainLooper)
     }
 
     private fun getStackTrace(th: Throwable?): String {
@@ -74,22 +73,6 @@ class ApplicationLoader : Application() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-    }
-
-    private fun initPushServices() {
-    }
-
-    private fun checkPlayServices(): Boolean {
-        return true
-    }
-
-    protected fun appCenterLogInternal(e: Throwable?) {
-    }
-
-    protected fun checkForUpdatesInternal() {
-    }
-
-    protected fun startAppCenterInternal(context: Activity?) {
     }
 
     companion object {
@@ -302,18 +285,6 @@ class ApplicationLoader : Application() {
                 return true
             }
             return false
-        }
-
-        fun startAppCenter(context: Activity?) {
-            applicationLoaderInstance!!.startAppCenterInternal(context)
-        }
-
-        fun checkForUpdates() {
-            applicationLoaderInstance!!.checkForUpdatesInternal()
-        }
-
-        fun appCenterLog(e: Throwable?) {
-            applicationLoaderInstance!!.appCenterLogInternal(e)
         }
     }
 }
