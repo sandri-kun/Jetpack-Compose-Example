@@ -24,7 +24,7 @@ import androidx.compose.material3.*
 import androidx.navigation.compose.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import org.jetpack.compose.ui.theme.screens.DetailsScreen
+import org.jetpack.compose.ui.screens.DetailsScreen
 import org.jetpack.compose.ui.theme.MyAppTheme
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
@@ -32,11 +32,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.FontWeight
-import org.jetpack.compose.ui.theme.screens.HomeScreen
+import org.jetpack.compose.ui.screens.HomeScreen
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
@@ -61,6 +62,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -176,7 +178,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     JetpackComposeExampleTheme {
